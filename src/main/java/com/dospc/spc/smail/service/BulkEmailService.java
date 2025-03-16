@@ -21,7 +21,7 @@ public class BulkEmailService {
     @Autowired
     private GoogleSheetService googleSheetsService;
 
-    public void sendBulkEmails(String apiKey,String spreadsheetId, String range) throws Exception {
+    public void sendBulkEmails(String apiKey,String spreadsheetId, String range,String Subject,String content) throws Exception {
         List<List<Object>> emails = googleSheetsService.readSheet(apiKey,spreadsheetId, range);
 
         ExecutorService executor = Executors.newFixedThreadPool(20);
@@ -30,14 +30,14 @@ public class BulkEmailService {
             String email = (String) row.get(0);
             System.out.println("email " + email);
             executor.submit(() -> {
-                emailService.sendEmailUsingYandex(email, "Subject", "Email content");
+                emailService.sendEmailUsingYandex(email, Subject, content);
             });
         }
 
         executor.shutdown();
     }
 
-    public void sendBulkEmailsV2(String apiKey,String spreadsheetId, String range) throws Exception {
+    public void sendBulkEmailsV2(String apiKey,String spreadsheetId, String range,String Subject,String content) throws Exception {
         List<List<Object>> emails = googleSheetsService.readSheet(apiKey,spreadsheetId, range);
 
         ExecutorService executor = Executors.newFixedThreadPool(20);
@@ -46,14 +46,14 @@ public class BulkEmailService {
             String email = (String) row.get(0);
             System.out.println("email " + email);
             executor.submit(() -> {
-                multiSmtpEmailService.sendEmail(email, "Subject", "Email content");
+                multiSmtpEmailService.sendEmail(email, Subject, content);
             });
         }
 
         executor.shutdown();
     }
 
-    public void sendBulkEmailsV3(String apiKey,String spreadsheetId, String range) throws Exception {
+    public void sendBulkEmailsV3(String apiKey,String spreadsheetId, String range,String Subject,String content) throws Exception {
         List<List<Object>> emails = googleSheetsService.readSheet(apiKey,spreadsheetId, range);
 
         ExecutorService executor = Executors.newFixedThreadPool(20);

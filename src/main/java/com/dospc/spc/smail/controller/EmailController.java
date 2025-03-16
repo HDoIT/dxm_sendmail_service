@@ -17,9 +17,9 @@ public class EmailController {
     private MultiSmtpEmailService emailService;
 
     @GetMapping("/send-emails")
-    public String sendEmails(@RequestParam String apiKey,@RequestParam String spreadsheetId, @RequestParam String range) {
+    public String sendEmails(@RequestParam String apiKey,@RequestParam String spreadsheetId, @RequestParam String range,@RequestParam String subject, @RequestParam String content) {
         try {
-            bulkEmailService.sendBulkEmails(apiKey,spreadsheetId, range);
+            bulkEmailService.sendBulkEmails(apiKey,spreadsheetId, range,subject,content);
             return "Emails are being sent in the background.";
         } catch (Exception e) {
             e.printStackTrace();
@@ -29,9 +29,9 @@ public class EmailController {
 
 
     @PostMapping("/send")
-    public String sendEmaild(@RequestParam String apiKey,@RequestParam String spreadsheetId, @RequestParam String range) {
+    public String sendEmaild(@RequestParam String apiKey,@RequestParam String spreadsheetId, @RequestParam String range,@RequestParam String subject, @RequestParam String content) {
         try{
-            bulkEmailService.sendBulkEmailsV2(apiKey,spreadsheetId, range);
+            bulkEmailService.sendBulkEmailsV2(apiKey,spreadsheetId, range,subject,content);
 
 //        emailService.sendEmail(emailRequest.getTo(), emailRequest.getSubject(), emailRequest.getText());
             return "Email sent successfully!";
