@@ -36,13 +36,22 @@ public class MultiSmtpEmailService {
 
         JavaMailSender mailSender = mailSenders.get(index);
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setFrom(formatSender(senderNames.get(index), senderEmails.get(index))); // Đặt tên và email người gửi
+        message.setFrom(formatSender(getSenderName(index), senderEmails.get(index))); // Đặt tên và email người gửi
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
         mailSender.send(message);
 
         emailCounts[index]++;
+    }
+
+    private String getSenderName(int index) {
+        // Nếu chỉ có một tên, sử dụng tên đó cho tất cả các dịch vụ
+        if (senderNames.size() == 1) {
+            return senderNames.get(0);
+        }
+        // Nếu có nhiều tên, sử dụng tên tương ứng với index
+        return senderNames.get(index);
     }
 
     private String formatSender(String name, String email) {

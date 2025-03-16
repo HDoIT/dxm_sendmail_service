@@ -13,8 +13,7 @@ public class EmailController {
 
     @Autowired
     private BulkEmailService bulkEmailService;
-    @Autowired
-    private MultiSmtpEmailService emailService;
+
 
     @GetMapping("/send-emails")
     public String sendEmails(@RequestParam String apiKey,@RequestParam String spreadsheetId, @RequestParam String range,@RequestParam String subject, @RequestParam String content) {
