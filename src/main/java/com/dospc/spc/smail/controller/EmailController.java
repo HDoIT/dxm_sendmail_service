@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(value = "*",maxAge = 3600)
 public class EmailController {
 
     @Autowired
